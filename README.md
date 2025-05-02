@@ -6,8 +6,10 @@ A Java-based parser that analyzes token sequences and constructs a syntax tree b
 ## Project Structure
 
 - `src/main/java`: Contains the Java source code.
-- `src/main/resources`: Contains a number of test cases
+- `src/main/resources`: Contains a number of test cases.
 - `pom.xml`: Maven configuration file.
+- `src/main/syntaxdiagram`: Contain the syntax diagrams of the rules.
+- `src/main/firstfollow`: Contain the FIRST and FOLLOW Set of the rules.
 
 ## Prerequisites
 
