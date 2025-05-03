@@ -10,6 +10,8 @@ A Java-based parser that analyzes token sequences and constructs a syntax tree b
 - `pom.xml`: Maven configuration file.
 - `src/main/syntaxdiagram`: Contain the syntax diagrams of the rules.
 - `src/main/firstfollow`: Contain the FIRST and FOLLOW Set of the rules.
+- `src/test/resources`: Contain the files of syntactic test
+- `src/test/resources/TestResult.md`: This file analyzes the test cases
 
 ## Prerequisites
 
