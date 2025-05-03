@@ -1,11 +1,9 @@
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.Vector;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import org.junit.jupiter.api.Test;
 
 public class TestTheParser {
 	
@@ -15,7 +13,7 @@ public class TestTheParser {
 	@Test
 	public void testParserInputThree() throws IOException {
 		System.out.println("testing statements ==========================================================================");
-		File file = new File("src/main/resources/inputStatements.txt");
+		File file = new File("src/test/resources/Calculadora.txt");
 		TheLexer lexer = new TheLexer(file);
 		lexer.run();
 		Vector<TheToken> tokens = lexer.getTokens();
@@ -26,7 +24,7 @@ public class TestTheParser {
 	@Test
 	public void testParserInputTwo() throws IOException {
 		System.out.println("testing assignments =========================================================================");
-		File file = new File("src/main/resources/inputAssignment.txt");
+		File file = new File("src/test/resources/ConteoPares.txt");
 		TheLexer lexer = new TheLexer(file);
 		lexer.run();
 		Vector<TheToken> tokens = lexer.getTokens();
@@ -37,7 +35,7 @@ public class TestTheParser {
 	@Test
 	public void testParserInputOne() throws IOException {
 		System.out.println("testing method declaration ==================================================================");
-		File file = new File("src/main/resources/inputMethods.txt");
+		File file = new File("src/test/resources/Suma.txt");
 		TheLexer lexer = new TheLexer(file);
 		lexer.run();
 		Vector<TheToken> tokens = lexer.getTokens();
@@ -48,7 +46,7 @@ public class TestTheParser {
 	@Test
 	public void testParserInputZero() throws IOException {
 		System.out.println("testing class declaration ===================================================================");
-		File file = new File("src/main/resources/inputClass.txt");
+		File file = new File("src/test/resources/Temperatura.txt");
 		TheLexer lexer = new TheLexer(file);
 		lexer.run();
 		Vector<TheToken> tokens = lexer.getTokens();
