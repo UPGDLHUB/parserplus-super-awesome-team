@@ -1,14 +1,7 @@
-public class Temperatura {
-
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-
-        System.out.println("Ingrese temperatura en Celsius:");
-        double celsius = sc.nextDouble();
-
+class Temperatura {
+    float fahrenheit;
+    void celsiusTofahrenheit(float celsius){
         // Error: Falta el operador '=' para la asignación
-        double fahrenheit  (celsius * 9/5) + 32;
-
-        System.out.println("Temperatura en Fahrenheit: " + fahrenheit);
+        fahrenheit  (celsius * 9/5) + 32;
     }
 }

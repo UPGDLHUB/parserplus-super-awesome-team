@@ -1,19 +1,7 @@
-import java.util.Scanner;
-
-public class Suma {
-
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-
-        System.out.println("Ingrese dos números para sumar:");
-
-        int a = sc.nextInt();
-        int b = sc.nextInt();
-
+class Suma {
+    int a = 25;
+    int b = 67;
+    void suma_dos_numero( int a, int b){
         int suma = a + b;
-
-        // Error: Falta cerrar el bloque del método main
-        System.out.println("La suma es: " + suma);
-
-    // Falta una llave de cierre aquí
+    //Falta la llave de cierre
 }
