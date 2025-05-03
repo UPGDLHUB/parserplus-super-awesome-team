@@ -13,7 +13,7 @@ public class TestTheParser {
 	@Test
 	public void testParserInputThree() throws IOException {
 		System.out.println("testing statements ==========================================================================");
-		File file = new File("src/test/resources/Calculadora.txt");
+		File file = new File("src/main/resources/inputMethods.txt");
 		TheLexer lexer = new TheLexer(file);
 		lexer.run();
 		Vector<TheToken> tokens = lexer.getTokens();
