@@ -1355,6 +1355,7 @@ public class TheParser {
 		System.out.println("--- RULE_SWITCH");
 		if (!isInFirstSetOf("SWITCH")) {
 			boolean foundFirst = skipUntilFirstOrFollow("SWITCH", 1100);
+			
 			if (!foundFirst) {
 				System.out.println("Recovered: Skipping SWITCH rule");
 				return;
@@ -1543,36 +1544,141 @@ public class TheParser {
 						System.out.println("Recovered: Missing closing parenthesis in switch");
 						currentToken++;
 						System.out.println("--- {");
-						// Continue with the switch body
-						// (similar code as above, but for brevity I'm simplifying)
-						try {
-							while (currentToken < tokens.size() && !tokens.get(currentToken).getValue().equals("}")) {
-								if (tokens.get(currentToken).getValue().equals("case") || 
-									tokens.get(currentToken).getValue().equals("default")) {
-									// Process case or default
-									// (simplified)
+						// Complete switch body processing
+						while (currentToken < tokens.size() && !tokens.get(currentToken).getValue().equals("}")) {
+							if (tokens.get(currentToken).getValue().equals("case")) {
+								currentToken++;
+								System.out.println("---- case");
+								if (!isInFirstSetOf("EXPRESSION")) {
+									boolean foundFirst = skipUntilFirstOrFollow("EXPRESSION", 1112);
+									if (!foundFirst) {
+										// Intentar recuperarse buscando un colon
+										while (currentToken < tokens.size() && 
+											!tokens.get(currentToken).getValue().equals(":") && 
+											!tokens.get(currentToken).getValue().equals("}")) {
+											currentToken++;
+										}
+										if (currentToken < tokens.size() && tokens.get(currentToken).getValue().equals(":")) {
+											currentToken++;
+											System.out.println("Recovered: Missing expression in case label");
+										} else {
+											System.out.println("Recovered: Malformed case label");
+											continue;
+										}
+									} else {
+										RULE_EXPRESSION();
+									}
+								} else {
+									RULE_EXPRESSION();
+								}
+								if (currentToken < tokens.size() && tokens.get(currentToken).getValue().equals(":")) {
 									currentToken++;
+									System.out.println("---- :");
+									try {
+										while (currentToken < tokens.size() && 
+											!tokens.get(currentToken).getValue().equals("break") && 
+											!tokens.get(currentToken).getValue().equals("case") && 
+											!tokens.get(currentToken).getValue().equals("default") && 
+											!tokens.get(currentToken).getValue().equals("}")) {
+											RULE_BODY();
+										}
+									} catch (Exception e) {
+										System.out.println("Error in case body: " + e.getMessage());
+										// Recover by finding break, case, default or }
+										while (currentToken < tokens.size() && 
+											!tokens.get(currentToken).getValue().equals("break") && 
+											!tokens.get(currentToken).getValue().equals("case") && 
+											!tokens.get(currentToken).getValue().equals("default") && 
+											!tokens.get(currentToken).getValue().equals("}")) {
+											currentToken++;
+										}
+									}
+									if (currentToken < tokens.size() && tokens.get(currentToken).getValue().equals("break")) {
+										currentToken++;
+										System.out.println("---- break");
+										if (currentToken < tokens.size() && tokens.get(currentToken).getValue().equals(";")) {
+											currentToken++;
+											System.out.println("---- ;");
+										} else {
+											error(1113);
+											System.out.println("Recovered: Missing semicolon after break");
+										}
+									} else if (currentToken < tokens.size() && 
+											(tokens.get(currentToken).getValue().equals("case") || 
+											tokens.get(currentToken).getValue().equals("default") || 
+											tokens.get(currentToken).getValue().equals("}"))) {
+										System.out.println("Recovered: Missing break statement in case");
+									}
+								} else {
+									error(1114);
+									// Skip to next case, default or }
 									while (currentToken < tokens.size() && 
 										!tokens.get(currentToken).getValue().equals("case") && 
 										!tokens.get(currentToken).getValue().equals("default") && 
 										!tokens.get(currentToken).getValue().equals("}")) {
 										currentToken++;
 									}
+									System.out.println("Recovered: Missing colon after case expression");
+								}
+							} else if (tokens.get(currentToken).getValue().equals("default")) {
+								currentToken++;
+								System.out.println("---- default");
+								if (currentToken < tokens.size() && tokens.get(currentToken).getValue().equals(":")) {
+									currentToken++;
+									System.out.println("---- :");
+									try {
+										while (currentToken < tokens.size() && 
+											!tokens.get(currentToken).getValue().equals("break") && 
+											!tokens.get(currentToken).getValue().equals("case") && 
+											!tokens.get(currentToken).getValue().equals("}")) {
+											RULE_BODY();
+										}
+										if (currentToken < tokens.size() && tokens.get(currentToken).getValue().equals("break")) {
+											currentToken++;
+											System.out.println("---- break");
+											if (currentToken < tokens.size() && tokens.get(currentToken).getValue().equals(";")) {
+												currentToken++;
+												System.out.println("---- ;");
+											} else {
+												error(1115);
+												System.out.println("Recovered: Missing semicolon after break in default case");
+											}
+										}
+									} catch (Exception e) {
+										System.out.println("Error in default body: " + e.getMessage());
+										// Recover by finding the closing bracket
+										while (currentToken < tokens.size() && 
+											!tokens.get(currentToken).getValue().equals("}")) {
+											currentToken++;
+										}
+									}
 								} else {
+									error(1116);
+									// Skip to next closing bracket
+									while (currentToken < tokens.size() && 
+										!tokens.get(currentToken).getValue().equals("}")) {
+										currentToken++;
+									}
+									System.out.println("Recovered: Missing colon after default");
+								}
+							} else {
+								error(1117);
+								// Skip to next case, default or }
+								while (currentToken < tokens.size() && 
+									!tokens.get(currentToken).getValue().equals("case") && 
+									!tokens.get(currentToken).getValue().equals("default") && 
+									!tokens.get(currentToken).getValue().equals("}")) {
 									currentToken++;
 								}
+								System.out.println("Recovered: Expected case or default in switch");
 							}
-							if (currentToken < tokens.size() && tokens.get(currentToken).getValue().equals("}")) {
-								currentToken++;
-								System.out.println("--- }");
-							}
-						} catch (Exception e) {
-							System.out.println("Error in switch recovery: " + e.getMessage());
-							// Skip to follow set
-							while (currentToken < tokens.size() && 
-								!isInFollowSetOf("SWITCH")) {
-								currentToken++;
-							}
+						}
+						if (currentToken < tokens.size() && tokens.get(currentToken).getValue().equals("}")) {
+							currentToken++;
+							System.out.println("--- }");
+						} else {
+							error(1118);
+							System.out.println("Recovered: Missing closing brace in switch statement");
 						}
 					} else {
 						System.out.println("Recovered: Skipped malformed switch statement");
