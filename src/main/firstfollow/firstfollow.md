@@ -1,155 +1,158 @@
-# FIRST and FOLLOW Sets for Your Grammar
+# FIRST and FOLLOW Sets for Parser Grammar
+
+This document contains the FIRST and FOLLOW sets for the grammar used in the recursive descent parser.
+
 ## FIRST Sets
+
 The FIRST set of a non-terminal contains all terminals that can appear as the first symbol of any string derived from that non-terminal.
 
 ### PROGRAM
-    FIRST(PROGRAM) = {'{', 'class'}
+- FIRST(PROGRAM) = {'{', 'class'}
 
 ### METHODS
-    FIRST(METHODS) = FIRST(TYPE) = {'int', 'float', 'void', 'char', 'string', 'boolean'}
+- FIRST(METHODS) = FIRST(TYPE) = {'int', 'float', 'void', 'char', 'string', 'boolean'}
 
 ### PARAMS
-    FIRST(PARAMS) = FIRST(TYPE) ∪ {ε} = {'int', 'float', 'void', 'char', 'string', 'boolean', ε}
+- FIRST(PARAMS) = FIRST(TYPE) ∪ {ε} = {'int', 'float', 'void', 'char', 'string', 'boolean', ε}
 
 ### BODY
-    FIRST(BODY) = FIRST(TYPE) ∪ FIRST(ASSIGNMENT) ∪ FIRST(CALL_METHOD) ∪ FIRST(RETURN) ∪ FIRST(WHILE) ∪ FIRST(IF) ∪ FIRST(DO_WHILE) ∪ FIRST(FOR) ∪ FIRST(SWITCH) ∪ FIRST(EXPRESSION) ∪ {'break', ε}
-
-    FIRST(BODY) = {'int', 'float', 'void', 'char', 'string', 'boolean', IDENTIFIER, 'return', 'while', 'if', 'do', 'for', 'switch', '(', '!', '-', LITERAL, 'break', ε}
+- FIRST(BODY) = FIRST(TYPE) ∪ FIRST(ASSIGNMENT) ∪ FIRST(CALL_METHOD) ∪ FIRST(RETURN) ∪ FIRST(WHILE) ∪ FIRST(IF) ∪ FIRST(DO_WHILE) ∪ FIRST(FOR) ∪ FIRST(SWITCH) ∪ FIRST(EXPRESSION) ∪ {'break', ε}
+- = {'int', 'float', 'void', 'char', 'string', 'boolean', IDENTIFIER, 'return', 'while', 'if', 'do', 'for', 'switch', '(', '!', '-', LITERAL, 'break', ε}
 
 ### VARIABLE
-    FIRST(VARIABLE) = FIRST(TYPE) = {'int', 'float', 'void', 'char', 'string', 'boolean'}
+- FIRST(VARIABLE) = FIRST(TYPE) = {'int', 'float', 'void', 'char', 'string', 'boolean'}
 
 ### ASSIGNMENT
-    FIRST(ASSIGNMENT) = {IDENTIFIER}
+- FIRST(ASSIGNMENT) = {IDENTIFIER}
 
 ### CALL_METHOD
-    FIRST(CALL_METHOD) = {IDENTIFIER}
+- FIRST(CALL_METHOD) = {IDENTIFIER}
 
 ### PARAM_VALUES
-    FIRST(PARAM_VALUES) = FIRST(EXPRESSION) ∪ {ε} = {IDENTIFIER, '(', '!', '-', LITERAL, ε}
+- FIRST(PARAM_VALUES) = FIRST(EXPRESSION) ∪ {ε} = {IDENTIFIER, '(', '!', '-', LITERAL, ε}
 
 ### RETURN
-    FIRST(RETURN) = {'return'}
+- FIRST(RETURN) = {'return'}
 
 ### WHILE
-    FIRST(WHILE) = {'while'}
+- FIRST(WHILE) = {'while'}
 
 ### IF
-    FIRST(IF) = {'if'}
+- FIRST(IF) = {'if'}
 
 ### DO_WHILE
-    FIRST(DO_WHILE) = {'do'}
+- FIRST(DO_WHILE) = {'do'}
 
 ### FOR
-    FIRST(FOR) = {'for'}
+- FIRST(FOR) = {'for'}
 
 ### SWITCH
-    FIRST(SWITCH) = {'switch'}
+- FIRST(SWITCH) = {'switch'}
 
 ### STATEMENT_BLOCK
-    FIRST(STATEMENT_BLOCK) = {'{', FIRST(TYPE), FIRST(ASSIGNMENT), FIRST(CALL_METHOD), FIRST(RETURN), FIRST(WHILE), FIRST(IF), FIRST(DO_WHILE), FIRST(FOR), FIRST(SWITCH), FIRST(EXPRESSION)}
-
-    FIRST(STATEMENT_BLOCK) = {'{', 'int', 'float', 'void', 'char', 'string', 'boolean', IDENTIFIER, 'return', 'while', 'if', 'do', 'for', 'switch', '(', '!', '-', LITERAL}
+- FIRST(STATEMENT_BLOCK) = {'{', FIRST(TYPE), FIRST(ASSIGNMENT), FIRST(CALL_METHOD), FIRST(RETURN), FIRST(WHILE), FIRST(IF), FIRST(DO_WHILE), FIRST(FOR), FIRST(SWITCH), FIRST(EXPRESSION)}
+- = {'{', 'int', 'float', 'void', 'char', 'string', 'boolean', IDENTIFIER, 'return', 'while', 'if', 'do', 'for', 'switch', '(', '!', '-', LITERAL}
 
 ### EXPRESSION
-    FIRST(EXPRESSION) = FIRST(X) = {IDENTIFIER, '(', '!', '-', LITERAL}
+- FIRST(EXPRESSION) = FIRST(X) = {IDENTIFIER, '(', '!', '-', LITERAL}
 
 ### X
-    FIRST(X) = FIRST(Y) = {IDENTIFIER, '(', '!', '-', LITERAL}
+- FIRST(X) = FIRST(Y) = {IDENTIFIER, '(', '!', '-', LITERAL}
 
 ### Y
-    FIRST(Y) = {'!', FIRST(R)} = {'!', IDENTIFIER, '(', '-', LITERAL}
+- FIRST(Y) = {'!', FIRST(R)} = {'!', IDENTIFIER, '(', '-', LITERAL}
 
 ### R
-    FIRST(R) = FIRST(E) = {IDENTIFIER, '(', '-', LITERAL}
+- FIRST(R) = FIRST(E) = {IDENTIFIER, '(', '-', LITERAL}
 
 ### E
-    FIRST(E) = FIRST(A) = {IDENTIFIER, '(', '-', LITERAL}
+- FIRST(E) = FIRST(A) = {IDENTIFIER, '(', '-', LITERAL}
 
 ### A
-    FIRST(A) = FIRST(B) = {IDENTIFIER, '(', '-', LITERAL}
+- FIRST(A) = FIRST(B) = {IDENTIFIER, '(', '-', LITERAL}
 
 ### B
-    FIRST(B) = {'-', FIRST(C)} = {'-', IDENTIFIER, '(', LITERAL}
+- FIRST(B) = {'-', FIRST(C)} = {'-', IDENTIFIER, '(', LITERAL}
 
 ### C
-    FIRST(C) = {IDENTIFIER, '(', LITERAL}
+- FIRST(C) = {IDENTIFIER, '(', LITERAL}
 
 ### TYPE
-    FIRST(TYPE) = {'int', 'float', 'void', 'char', 'string', 'boolean'}
+- FIRST(TYPE) = {'int', 'float', 'void', 'char', 'string', 'boolean'}
 
 ## FOLLOW Sets
+
 The FOLLOW set of a non-terminal A contains all terminals that can appear immediately to the right of A in any sentential form.
 
 ### PROGRAM
-    FOLLOW(PROGRAM) = {$} (end of input)
+- FOLLOW(PROGRAM) = {$} (end of input)
 
 ### METHODS
-    FOLLOW(METHODS) = FOLLOW(TYPE) ∪ {'}'}
-    FOLLOW(METHODS) = {'int', 'float', 'void', 'char', 'string', 'boolean', '}'}
+- FOLLOW(METHODS) = FOLLOW(TYPE) ∪ {'}'}
+- = {'int', 'float', 'void', 'char', 'string', 'boolean', '}'}
 
 ### PARAMS
-    FOLLOW(PARAMS) = {')'}
+- FOLLOW(PARAMS) = {')'}
 
 ### BODY
-    FOLLOW(BODY) = {'}', 'break', 'case', 'default'}
+- FOLLOW(BODY) = {'}', 'break', 'case', 'default'}
 
 ### VARIABLE
-    FOLLOW(VARIABLE) = {';'}
+- FOLLOW(VARIABLE) = {';'}
 
 ### ASSIGNMENT
-    FOLLOW(ASSIGNMENT) = {';'}
+- FOLLOW(ASSIGNMENT) = {';'}
 
 ### CALL_METHOD
-    FOLLOW(CALL_METHOD) = {';', '+', '-', '*', '/', ')', '<', '>', '==', '!=', '&&', '||', ','}
+- FOLLOW(CALL_METHOD) = {';', '+', '-', '*', '/', ')', '<', '>', '==', '!=', '&&', '||', ','}
 
 ### PARAM_VALUES
-    FOLLOW(PARAM_VALUES) = {')'}
+- FOLLOW(PARAM_VALUES) = {')'}
 
 ### RETURN
-    FOLLOW(RETURN) = {'}', 'break', 'case', 'default'}
+- FOLLOW(RETURN) = {'}', 'break', 'case', 'default'}
 
 ### WHILE
-    FOLLOW(WHILE) = {'}', ';', 'else', 'break', 'case', 'default'}
+- FOLLOW(WHILE) = {'}', ';', 'else', 'break', 'case', 'default'}
 
 ### IF
-    FOLLOW(IF) = {'}', ';', 'else', 'break', 'case', 'default'}
+- FOLLOW(IF) = {'}', ';', 'else', 'break', 'case', 'default'}
 
 ### DO_WHILE
-    FOLLOW(DO_WHILE) = {'}', ';', 'else', 'break', 'case', 'default'}
+- FOLLOW(DO_WHILE) = {'}', ';', 'else', 'break', 'case', 'default'}
 
 ### FOR
-    FOLLOW(FOR) = {'}', ';', 'else', 'break', 'case', 'default'}
+- FOLLOW(FOR) = {'}', ';', 'else', 'break', 'case', 'default'}
 
 ### SWITCH
-    FOLLOW(SWITCH) = {'}', ';', 'else', 'break', 'case', 'default'}
+- FOLLOW(SWITCH) = {'}', ';', 'else', 'break', 'case', 'default'}
 
 ### STATEMENT_BLOCK
-    FOLLOW(STATEMENT_BLOCK) = {'}', ';', 'else', 'while', 'break', 'case', 'default'}
+- FOLLOW(STATEMENT_BLOCK) = {'}', ';', 'else', 'while', 'break', 'case', 'default'}
 
 ### EXPRESSION
-    FOLLOW(EXPRESSION) = {';', ')', ',', ':'}
+- FOLLOW(EXPRESSION) = {';', ')', ',', ':'}
 
 ### X
-    FOLLOW(X) = FOLLOW(EXPRESSION) = {';', ')', ',', ':'}
+- FOLLOW(X) = FOLLOW(EXPRESSION) = {';', ')', ',', ':'}
 
 ### Y
-    FOLLOW(Y) = {'||'} ∪ FOLLOW(X) = {'||', ';', ')', ',', ':'}
+- FOLLOW(Y) = {'||'} ∪ FOLLOW(X) = {'||', ';', ')', ',', ':'}
 
 ### R
-    FOLLOW(R) = {'&&'} ∪ FOLLOW(Y) = {'&&', '||', ';', ')', ',', ':'}
+- FOLLOW(R) = {'&&'} ∪ FOLLOW(Y) = {'&&', '||', ';', ')', ',', ':'}
 
 ### E
-    FOLLOW(E) = {'<', '>', '==', '!='} ∪ FOLLOW(R) = {'<', '>', '==', '!=', '&&', '||', ';', ')', ',', ':'}
+- FOLLOW(E) = {'<', '>', '==', '!='} ∪ FOLLOW(R) = {'<', '>', '==', '!=', '&&', '||', ';', ')', ',', ':'}
 
 ### A
-    FOLLOW(A) = {'+', '-'} ∪ FOLLOW(E) = {'+', '-', '<', '>', '==', '!=', '&&', '||', ';', ')', ',', ':'}
+- FOLLOW(A) = {'+', '-'} ∪ FOLLOW(E) = {'+', '-', '<', '>', '==', '!=', '&&', '||', ';', ')', ',', ':'}
 
 ### B
-    FOLLOW(B) = {'', '/'} ∪ FOLLOW(A) = {'', '/', '+', '-', '<', '>', '==', '!=', '&&', '||', ';', ')', ',', ':'}
+- FOLLOW(B) = {'*', '/'} ∪ FOLLOW(A) = {'*', '/', '+', '-', '<', '>', '==', '!=', '&&', '||', ';', ')', ',', ':'}
 
 ### C
-    FOLLOW(C) = FOLLOW(B) = {'*', '/', '+', '-', '<', '>', '==', '!=', '&&', '||', ';', ')', ',', ':'}
+- FOLLOW(C) = FOLLOW(B) = {'*', '/', '+', '-', '<', '>', '==', '!=', '&&', '||', ';', ')', ',', ':'}
 
 ### TYPE
-    FOLLOW(TYPE) = {IDENTIFIER}
+- FOLLOW(TYPE) = {IDENTIFIER}
