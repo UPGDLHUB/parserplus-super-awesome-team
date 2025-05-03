@@ -178,12 +178,21 @@ public class TheParser {
 		if (currentToken >= tokens.size()) {
 			return false;
 		}
-
 		String tokenValue = tokens.get(currentToken).getValue();
 		String tokenType = tokens.get(currentToken).getType();
-
 		Set<String> first = firstSets.get(rule);
-		return first.contains(tokenValue) || first.contains(tokenType);
+		// Verificar si el valor o tipo del token está directamente en el conjunto FIRST
+		if (first.contains(tokenValue) || first.contains(tokenType)) {
+			return true;
+		}
+		// Comprobar si el tipo de token es un literal y el conjunto FIRST contiene "LITERAL"
+		if ((tokenType.equals("INTEGER") || tokenType.equals("FLOAT") || 
+			tokenType.equals("CHAR") || tokenType.equals("STRING") || 
+			tokenType.equals("HEXADECIMAL") || tokenType.equals("BINARY")) && 
+			first.contains("LITERAL")) {
+			return true;
+		}
+		return false;
 	}
 	
 	/**
